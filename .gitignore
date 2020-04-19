@@ -1,0 +1,3 @@
+venv/*
+rubus.egg-info/*
+.vscode/*
