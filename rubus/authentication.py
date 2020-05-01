@@ -1,6 +1,4 @@
 import getpass
-import json
-import os
 import rubus.http as http
 
 import click
@@ -16,12 +14,12 @@ def login(baseURL: str):
         token = r.json()['token']
         click.echo(
             f'''You are logged in!
-            
+
 In order to perform any other command, set your session key to the
 `RUBUS_SESSION` environment variable. ex:
 
 $ export RUBUS_SESSION={token}
-            
+
             ''')
     except Exception as e:
         print(e)
@@ -50,4 +48,5 @@ def update(config):
 
     r = requests.put(config.baseURL + '/user/me',
                      headers=config.headers, json=user)
+
     http.handle_response(200, r)

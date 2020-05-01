@@ -2,7 +2,6 @@ import json
 import os
 
 import click
-import requests
 
 
 def create_headers() -> dict:
@@ -24,3 +23,11 @@ def handle_response(expected_status_code: int, r):
         click.echo(r.json()['error'])
     else:
         click.echo(json.dumps(r.json(), indent=4, sort_keys=True))
+
+
+def handle_no_content(message: str, r):
+    click.echo('\n')
+    if r.status_code != 204:
+        click.echo(r.json()['error'])
+    else:
+        click.echo(message)

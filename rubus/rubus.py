@@ -1,11 +1,13 @@
 import click
 import requests
+import rubus.admin as a
 import rubus.authentication as auth
 import rubus.device as d
 import rubus.http as http
 
 
 class Config(object):
+    """Config contains the global configuration for Rubus CLI."""
 
     def __init__(self):
         self.baseURL = 'http://pi-controller:8080/v1'
@@ -42,8 +44,24 @@ def authentication(config, info, login, update):
 
 
 @cli.command()
-@click.option('--add', is_flag=True, help='Add a new device.')
-@click.option('--delete', is_flag=True, help='Delete an existing device.')
+@click.option('--user', is_flag=True, help='Create a new user.')
+@click.option('--add_device', is_flag=True, help='Add a new device.')
+@click.option('--delete_device', is_flag=True, help='Delete an existing device.')
+@pass_config
+def admin(config, user, add_device, delete_device):
+    config.headers = http.create_headers()
+    try:
+        if user:
+            a.create_user(config)
+        elif add_device:
+            a.add_device(config)
+        elif delete_device:
+            a.delete_device(config)
+    except requests.ConnectionError:
+        click.echo('Server is not responding, please try again later.')
+
+
+@cli.command()
 @click.option('--list', is_flag=True, help='List all the available devices.')
 @click.option('--get', help='Get information about a device.')
 @click.option('--acquire', help='Acquire a device.')
@@ -52,15 +70,10 @@ def authentication(config, info, login, update):
 @click.option('--on', help='The device\'s id to turn on.')
 @click.option('--off', help='The device\'s id to turn off.')
 @pass_config
-def device(config, add, delete, list, get, acquire, release, deploy, on, off):
-    config.baseURL += '/device/'
+def device(config, list, get, acquire, release, deploy, on, off):
     config.headers = http.create_headers()
     try:
-        if add:
-            d.add(config)
-        elif delete:
-            d.delete(config)
-        elif list:
+        if list:
             d.list(config)
         elif get:
             d.get(config, get)
