@@ -14,7 +14,7 @@ setup(
     long_description=readme,
     author='Quentin Vaucher',
     author_email='quentin.vaucher@protonmail.com',
-    url='https://github.com/kjuvi/rubus-cli',
+    url='https://github.com/xiorcale/rubus-cli',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
     install_requires=[

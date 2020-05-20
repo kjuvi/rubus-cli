@@ -5,6 +5,11 @@ import click
 
 
 def create_headers() -> dict:
+    '''
+    Create suitable header for application/json Content-Type, and set the
+    RUBUS_SESSION variable as Authorization if it exist. Otherwise the user
+    is prompted to login.
+    '''
     try:
         headers = {
             'Content-Type': 'application/json',
@@ -12,22 +17,12 @@ def create_headers() -> dict:
         }
         return headers
     except Exception:
-        click.echo(
+        print(
             'Please, log in and set the RUBUS_SESSION environment variable before using this command.')
         os.sys.exit(0)
 
 
-def handle_response(expected_status_code: int, r):
-    click.echo('\n')
-    if r.status_code != expected_status_code:
-        click.echo(r.json()['error'])
-    else:
-        click.echo(json.dumps(r.json(), indent=4, sort_keys=True))
-
-
-def handle_no_content(message: str, r):
-    click.echo('\n')
-    if r.status_code != 204:
-        click.echo(r.json()['error'])
-    else:
-        click.echo(message)
+def handle_response(json_response):
+    '''Display nicely the JSON response received from the Rubus API.'''
+    print('\n')
+    print(json.dumps(json_response, indent=4, sort_keys=True))

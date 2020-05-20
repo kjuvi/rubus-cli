@@ -10,7 +10,7 @@ class Config(object):
     """Config contains the global configuration for Rubus CLI."""
 
     def __init__(self):
-        self.baseURL = 'http://pi-controller:8080/v1'
+        self.baseURL = 'http://pi-controller:1323'
         self.headers = None
 
 
@@ -44,15 +44,21 @@ def authentication(config, info, login, update):
 
 
 @cli.command()
-@click.option('--user', is_flag=True, help='Create a new user.')
+@click.option('--add_user', is_flag=True, help='Create a new user.')
+@click.option('--delete_user', help='Delete an existing user.')
+@click.option('--list_user', is_flag=True, help='List all the users.')
 @click.option('--add_device', is_flag=True, help='Add a new device.')
 @click.option('--delete_device', is_flag=True, help='Delete an existing device.')
 @pass_config
-def admin(config, user, add_device, delete_device):
+def admin(config, add_user, delete_user, list_user, add_device, delete_device):
     config.headers = http.create_headers()
     try:
-        if user:
+        if add_user:
             a.create_user(config)
+        elif delete_user:
+            a.delete_user(config, delete_user)
+        elif list_user:
+            a.list_user(config)
         elif add_device:
             a.add_device(config)
         elif delete_device:

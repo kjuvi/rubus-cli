@@ -9,26 +9,27 @@ def login(baseURL: str):
     username = input("Username: ")
     password = getpass.getpass('Password: ')
     payload = {'username': username, 'password': password}
-    try:
-        r = requests.get(baseURL + '/user/login', params=payload)
+    r = requests.get(baseURL + '/login', params=payload)
+    if r.status_code == 200:
         token = r.json()['token']
-        click.echo(
-            f'''You are logged in!
+        return print(f'''You are logged in!
 
 In order to perform any other command, set your session key to the
 `RUBUS_SESSION` environment variable. ex:
 
 $ export RUBUS_SESSION={token}
 
-            ''')
-    except Exception as e:
-        print(e)
-        click.echo('Error, wrong username or password.\n')
+        ''')
+
+    print("\nError: ", r.json()['error'])
 
 
 def info(config):
     r = requests.get(config.baseURL + '/user/me', headers=config.headers)
-    http.handle_response(200, r)
+    if r.status_code == 200:
+        return http.handle_response(r.json())
+    
+    print("\nError: ", r.json()['error'])
 
 
 def update(config):
@@ -49,4 +50,7 @@ def update(config):
     r = requests.put(config.baseURL + '/user/me',
                      headers=config.headers, json=user)
 
-    http.handle_response(200, r)
+    if r.status_code == 200:
+        return http.handle_response(r.json())
+    
+    print("\nError: ", r.json()['error'])
