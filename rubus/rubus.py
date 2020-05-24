@@ -1,5 +1,6 @@
 import click
 import requests
+import os
 import rubus.admin as a
 import rubus.authentication as auth
 import rubus.device as d
@@ -10,7 +11,11 @@ class Config(object):
     """Config contains the global configuration for Rubus CLI."""
 
     def __init__(self):
-        self.baseURL = 'http://pi-controller:1323'
+        try:
+            baseURL = os.environ['RUBUS_HOSTNAME']
+        except Exception:
+            baseURL = 'http://localhost:1323'
+        self.baseURL = baseURL
         self.headers = None
 
 

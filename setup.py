@@ -1,24 +1,22 @@
 from setuptools import setup, find_packages
 
 
-with open('README.rst') as f:
+with open('README.md') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
-
 setup(
-    name='rubus',
-    version='1.0',
+    name='rubus-cli',
+    version='1.0.3',
     description='CLI to interact with a Rubus API instance',
     long_description=readme,
-    author='Quentin Vaucher',
+    author='xiorcale',
     author_email='quentin.vaucher@protonmail.com',
     url='https://github.com/xiorcale/rubus-cli',
-    license=license,
     packages=find_packages(exclude=('tests', 'docs')),
+    python_requires='>=3.6',
     install_requires=[
         'Click',
+        'requests'
     ],
     entry_points='''
         [console_scripts]

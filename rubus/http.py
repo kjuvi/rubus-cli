@@ -1,8 +1,6 @@
 import json
 import os
 
-import click
-
 
 def create_headers() -> dict:
     '''
