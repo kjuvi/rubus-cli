@@ -30,6 +30,8 @@ def acquire(config, device_id):
 def release(config, device_id):
     r = requests.post(config.baseURL + '/device/' + device_id + '/release',
                       headers=config.headers)
+    if r.status_code == 200:
+        return http.handle_response(r.json())
     print("\nError: ", r.json()['error'])
 
 

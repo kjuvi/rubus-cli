@@ -12,7 +12,7 @@ class Config(object):
 
     def __init__(self):
         try:
-            baseURL = os.environ['RUBUS_HOSTNAME']
+            baseURL = os.environ['RUBUS_API_URL']
         except Exception:
             baseURL = 'http://localhost:1323'
         self.baseURL = baseURL

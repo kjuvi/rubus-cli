@@ -15,6 +15,12 @@ how they are structured:
     - **device**: manage devices (turn on/off, deployment, ...)
 
 
+## Configuring the server
+
+By default, Rubus will try to reach a running instance of Rubus API on
+localhost. You can configure another address with the `RUBUS_API_URL`
+environment variable.
+
 ## Authentication system
 
 Excepted for the login, all the other commands require to be authenticated.
