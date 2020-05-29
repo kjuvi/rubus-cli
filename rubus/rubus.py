@@ -52,10 +52,11 @@ def authentication(config, info, login, update):
 @click.option('--add_user', is_flag=True, help='Create a new user.')
 @click.option('--delete_user', help='Delete an existing user.')
 @click.option('--list_user', is_flag=True, help='List all the users.')
+@click.option('--update_user_exp', help='Update the expiration date of a user.')
 @click.option('--add_device', is_flag=True, help='Add a new device.')
 @click.option('--delete_device', is_flag=True, help='Delete an existing device.')
 @pass_config
-def admin(config, add_user, delete_user, list_user, add_device, delete_device):
+def admin(config, add_user, delete_user, list_user, update_user_exp, add_device, delete_device):
     config.headers = http.create_headers()
     try:
         if add_user:
@@ -64,6 +65,8 @@ def admin(config, add_user, delete_user, list_user, add_device, delete_device):
             a.delete_user(config, delete_user)
         elif list_user:
             a.list_user(config)
+        elif update_user_exp:
+            a.update_user_exp(config, update_user_exp)
         elif add_device:
             a.add_device(config)
         elif delete_device:

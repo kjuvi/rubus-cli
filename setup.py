@@ -6,9 +6,10 @@ with open('README.md') as f:
 
 setup(
     name='rubus-cli',
-    version='1.0.6',
+    version='1.0.8',
     description='CLI to interact with a Rubus API instance',
     long_description=readme,
+    long_description_content_type="text/markdown",
     author='xiorcale',
     author_email='quentin.vaucher@protonmail.com',
     url='https://github.com/xiorcale/rubus-cli',

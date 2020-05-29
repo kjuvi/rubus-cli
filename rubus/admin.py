@@ -10,7 +10,8 @@ def create_user(config):
     user['password'] = getpass.getpass('Enter a password for the new user: ')
     answer = input('Do you want this user to be an administrator? [y/N] ')
     user['role'] = 'administrator' if answer == 'y' or answer == 'Y' else 'user'
-    answer = input('Do you want to set an expiration date for the user? [Y/n] ')
+    answer = input(
+        'Do you want to set an expiration date for the user? [Y/n] ')
     if answer not in ['n', 'N']:
         user['expiration'] = input('Enter an expiration date [YYYY-MM-DD]: ')
 
@@ -19,26 +20,28 @@ def create_user(config):
 
     if r.status_code == 201:
         return http.handle_response(r.json())
-    
+
     print("\nError: ", r.json()['error'])
 
 
 def delete_user(config, user_id):
     r = requests.delete(config.baseURL + '/admin/user/' + user_id,
-                      headers=config.headers)
+                        headers=config.headers)
 
     if r.status_code == 204:
         return print('\nUser successfully deleted')
-    
+
     print("\nError: ", r.json()['error'])
 
 
 def list_user(config):
     r = requests.get(config.baseURL + '/admin/user', headers=config.headers)
-    
+
     if r.status_code == 200:
         return http.handle_response(r.json())
-    
+
+    print(r.json())
+
     print("\nError: ", r.json()['error'])
 
 
@@ -46,7 +49,7 @@ def update_user_exp(config, user_id):
     exp = input('Enter a new expiration [YYYY-MM-DD]: ')
     params = {'expiration': exp}
 
-    r = requests.post(config.baseURL + '/admin/user/' + user_id, params=params,
+    r = requests.post(config.baseURL + '/admin/user/' + user_id + '/expiration', params=params,
                       headers=config.headers)
 
     if r.status_code == 200:
@@ -62,7 +65,7 @@ def add_device(config):
     params = {'hostname': hostname, 'port': port}
     r = requests.post(config.baseURL + '/admin/device',
                       params=params, headers=config.headers)
-    
+
     if r.status_code == 201:
         return http.handle_response(r.json())
 
