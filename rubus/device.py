@@ -48,7 +48,7 @@ def on(config, device_id):
     r = requests.post(config.baseURL + '/device/' + device_id +
                       '/on', headers=config.headers)
     if r.status_code == 204:
-        click.echo('Device is on.')
+        return print('Device is on.')
 
     print("\nError: ", r.json()['error'])
 
@@ -57,7 +57,7 @@ def off(config, device_id):
     r = requests.post(config.baseURL + '/device/' + device_id +
                       '/off', headers=config.headers)
     if r.status_code == 204:
-        print('Device is off.')
+        return print('Device is off.')
 
     print("\nError: ", r.json()['error'])
 

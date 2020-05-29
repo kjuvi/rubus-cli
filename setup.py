@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 setup(
     name='rubus-cli',
-    version='1.0.8',
+    version='1.0.9',
     description='CLI to interact with a Rubus API instance',
     long_description=readme,
     long_description_content_type="text/markdown",
